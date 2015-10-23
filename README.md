@@ -19,34 +19,38 @@ Getting started with the sample is easy. It is configured to run out of the box 
 
 To use this sample you will need a Azure Active Directory Tenant. If you're not sure what a tenant is or how you would get one, read [What is an Azure AD tenant](http://technet.microsoft.com/library/jj573650.aspx)? or [Sign up for Azure as an organization](http://azure.microsoft.com/documentation/articles/sign-up-organization/). These docs should get you started on your way to using Azure AD.
 
-### Step 2: Download node.js for your platform
+### Step 2: Download Java (7 and above) for your platform 
 
-To successfully use this sample, you need a working installation of [Node.js](https://nodejs.org/).
+To successfully use this sample, you need a working installation of [Java](http://www.oracle.com/technetwork/java/javase/downloads/index.html) and [Maven](https://maven.apache.org).
 
 ### Step 3: Download the Sample application and modules
 
-Next, clone the sample repo and install the project's NPM dependencies.
+Next, clone the sample repo and install the project's dependencies.
 
 From your shell or command line:
 
 * `$ git clone git@github.com:Azure-Samples/active-directory-java-webapi-headless.git`
 * `$ cd active-directory-java-webapi-headless`
-* `$ mvn archetype:generate -DgroupId=com.microsoft.azure -DartifactId=adal4jsample -DinteractiveMode=false`
+* `$ mvn compile -DgroupId=com.microsoft.azure -DartifactId=adal4jsample -DinteractiveMode=false`
 
-### Step 5: Configure your web app using constants.java
+### Step 5: Configure your web app using web.xml
 
-Provided for simplicity, `constants.java` contains some simple variables. In a 
-real application, it would be best to use environment variables or [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) 
-to store credentials securely, outside of your source control system.
+Provided for simplicity, `web.xml` in the webapp/WEB-INF/ folder contains values for you to fill in with your tenant information.
 
-### Step 6: Run the application
+### Step 6: Package and then deploy the adal4jsample.war file.
 
-* `$ java adal4jsample.jar`
+From your shell or command line:
+
+* `$ mvn package`
+
+This will generate a `adal4jsample.war` file in your /targets directory. Deploy this war file using Tomcat or any other J2EE container solution. This WAR will automatically be hosted at `http://<yourserverhost>:<yourserverport>/adal4jsample/`
+
+Example: `http://localhost:8080/adal4jsample/`
 
 
 ### You're done!
 
-You will have a server successfully running on `http://localhost:3000`.
+Click on "Sign-in" to start the process of logging in.
 
 ### Acknowledgements
 
