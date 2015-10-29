@@ -3,7 +3,6 @@ services: active-directory
 platforms: java
 author: brandwe
 ---
-
 # Integrating Azure AD into a Java web application
 
 This Java app will give you with a quick and easy way to set up a Web application in Java using OAuth2. The sample included in the download is designed to run on any platform and tested with Java 8.
@@ -29,8 +28,8 @@ Next, clone the sample repo and install the project's dependencies.
 
 From your shell or command line:
 
-* `$ git clone git@github.com:Azure-Samples/active-directory-java-webapi-headless.git`
-* `$ cd active-directory-java-webapi-headless`
+* `$ git clone https://github.com/Azure-Samples/active-directory-java-webapp-openidconnect.git`
+* `$ cd active-directory-java-webapp-openidconnect`
 * `$ mvn compile -DgroupId=com.microsoft.azure -DartifactId=adal4jsample -DinteractiveMode=false`
 
 ### Step 5: Configure your web app using web.xml
@@ -55,4 +54,5 @@ Click on "Sign-in" to start the process of logging in.
 ### Acknowledgements
 
 We would like to acknowledge the folks who own/contribute to the following projects for their support of Azure Active Directory and their libraries that were used to build this sample. In places where we forked these libraries to add additional functionality, we ensured that the chain of forking remains intact so you can navigate back to the original package. Working with such great partners in the open source community clearly illustrates what open collaboration can accomplish. Thank you!
+
 
