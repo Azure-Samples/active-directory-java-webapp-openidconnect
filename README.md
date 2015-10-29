@@ -29,8 +29,8 @@ Next, clone the sample repo and install the project's dependencies.
 
 From your shell or command line:
 
-* `$ git clone git@github.com:Azure-Samples/active-directory-java-webapi-headless.git`
-* `$ cd active-directory-java-webapi-headless`
+* `$ git clone https://github.com/Azure-Samples/active-directory-java-webapp-openidconnect.git`
+* `$ cd active-directory-java-webapp-openidconnect`
 * `$ mvn compile -DgroupId=com.microsoft.azure -DartifactId=adal4jsample -DinteractiveMode=false`
 
 ### Step 5: Configure your web app using web.xml
