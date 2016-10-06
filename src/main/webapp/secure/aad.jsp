@@ -9,7 +9,7 @@
 	<h3>List of users registered in the tenant - ${tenant}</h3>
 	<p>${users}</p>
 	<br>
-	<h3>User who authorised access to graph API</h3>
+	<h3>Current user</h3>
 	<table>
 		<tr>
 			<td>uniqueId:</td>
