@@ -48,9 +48,11 @@ public class AadController {
         } else {
             String data;
             try {
-                data = this.getUsernamesFromGraph(result.getAccessToken(), session.getServletContext()
-                        .getInitParameter("tenant"));
+                String tenant = session.getServletContext().getInitParameter("tenant");
+                data = getUsernamesFromGraph(result.getAccessToken(), tenant);
+                model.addAttribute("tenant", tenant);
                 model.addAttribute("users", data);
+                model.addAttribute("userInfo", result.getUserInfo());
             } catch (Exception e) {
                 model.addAttribute("error", e);
                 return "/error";
@@ -72,12 +74,12 @@ public class AadController {
         // logger.info("goodRespStr ->" + goodRespStr);
         int responseCode = conn.getResponseCode();
         JSONObject response = HttpClientHelper.processGoodRespStr(responseCode, goodRespStr);
-        JSONArray users = new JSONArray();
+        JSONArray users;
 
         users = JSONHelper.fetchDirectoryObjectJSONArray(response);
 
         StringBuilder builder = new StringBuilder();
-        User user = null;
+        User user;
         for (int i = 0; i < users.length(); i++) {
             JSONObject thisUserJSONObject = users.optJSONObject(i);
             user = new User();
