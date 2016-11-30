@@ -19,6 +19,7 @@
  ******************************************************************************/
 package com.microsoft.aad.adal4jsample;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -38,55 +39,63 @@ import com.microsoft.aad.adal4j.AuthenticationResult;
 @RequestMapping("/secure/aad")
 public class AadController {
 
-    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
-    public String getDirectoryObjects(ModelMap model, HttpServletRequest httpRequest) {
-        HttpSession session = httpRequest.getSession();
-        AuthenticationResult result = (AuthenticationResult) session.getAttribute(AuthHelper.PRINCIPAL_SESSION_NAME);
-        if (result == null) {
-            model.addAttribute("error", new Exception("AuthenticationResult not found in session."));
-            return "/error";
-        } else {
-            String data;
-            try {
-                String tenant = session.getServletContext().getInitParameter("tenant");
-                data = getUsernamesFromGraph(result.getAccessToken(), tenant);
-                model.addAttribute("tenant", tenant);
-                model.addAttribute("users", data);
-                model.addAttribute("userInfo", result.getUserInfo());
-            } catch (Exception e) {
-                model.addAttribute("error", e);
-                return "/error";
-            }
-        }
-        return "/secure/aad";
-    }
+	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
+	public String getDirectoryObjects(ModelMap model, HttpServletRequest httpRequest) {
+		HttpSession session = httpRequest.getSession();
+		AuthenticationResult result = (AuthenticationResult) session.getAttribute(AuthHelper.PRINCIPAL_SESSION_NAME);
+		if (result == null) {
+			model.addAttribute("error", new Exception("AuthenticationResult not found in session."));
+			return "/error";
+		} else {
+			String data;
+			try {
+				String idToken = result.getIdToken();
 
-    private String getUsernamesFromGraph(String accessToken, String tenant) throws Exception {
-        URL url = new URL(String.format("https://graph.windows.net/%s/users?api-version=2013-04-05", tenant,
-                accessToken));
+				String tenantId = TokenHelper.GetTenantId(idToken);
 
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        // Set the appropriate header fields in the request header.
-        conn.setRequestProperty("api-version", "2013-04-05");
-        conn.setRequestProperty("Authorization", accessToken);
-        conn.setRequestProperty("Accept", "application/json;odata=minimalmetadata");
-        String goodRespStr = HttpClientHelper.getResponseStringFromConn(conn, true);
-        // logger.info("goodRespStr ->" + goodRespStr);
-        int responseCode = conn.getResponseCode();
-        JSONObject response = HttpClientHelper.processGoodRespStr(responseCode, goodRespStr);
-        JSONArray users;
+				try {
+					data = getUsernamesFromGraph(result.getAccessToken(), tenantId);
+					model.addAttribute("users", data);
+				} catch (IOException ex) {
+					model.addAttribute("users", "Error listing all users. Make sure you have the right permissions set in Azure AD");
+				}
 
-        users = JSONHelper.fetchDirectoryObjectJSONArray(response);
+				model.addAttribute("tenant", tenantId);
+				model.addAttribute("userInfo", result.getUserInfo());
+			} catch (Exception e) {
+				model.addAttribute("error", e);
+				return "/error";
+			}
+		}
+		return "/secure/aad";
+	}
 
-        StringBuilder builder = new StringBuilder();
-        User user;
-        for (int i = 0; i < users.length(); i++) {
-            JSONObject thisUserJSONObject = users.optJSONObject(i);
-            user = new User();
-            JSONHelper.convertJSONObjectToDirectoryObject(thisUserJSONObject, user);
-            builder.append(user.getUserPrincipalName() + "<br/>");
-        }
-        return builder.toString();
-    }
+	private String getUsernamesFromGraph(String accessToken, String tenant) throws Exception {
+		URL url = new URL(
+				String.format("https://graph.windows.net/%s/users?api-version=2013-04-05", tenant, accessToken));
+
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		// Set the appropriate header fields in the request header.
+		conn.setRequestProperty("api-version", "2013-04-05");
+		conn.setRequestProperty("Authorization", accessToken);
+		conn.setRequestProperty("Accept", "application/json;odata=minimalmetadata");
+		String goodRespStr = HttpClientHelper.getResponseStringFromConn(conn, true);
+		// logger.info("goodRespStr ->" + goodRespStr);
+		int responseCode = conn.getResponseCode();
+		JSONObject response = HttpClientHelper.processGoodRespStr(responseCode, goodRespStr);
+		JSONArray users;
+
+		users = JSONHelper.fetchDirectoryObjectJSONArray(response);
+
+		StringBuilder builder = new StringBuilder();
+		User user;
+		for (int i = 0; i < users.length(); i++) {
+			JSONObject thisUserJSONObject = users.optJSONObject(i);
+			user = new User();
+			JSONHelper.convertJSONObjectToDirectoryObject(thisUserJSONObject, user);
+			builder.append(user.getUserPrincipalName() + "<br/>");
+		}
+		return builder.toString();
+	}
 
 }
