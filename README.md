@@ -1,7 +1,7 @@
 ---
 services: active-directory
 platforms: java
-author: brandwe
+author: xerners
 ---
 
 # Integrating Azure AD into a Java web application
