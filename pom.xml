@@ -74,9 +74,6 @@
 				<version>2.4</version>
 				<configuration>
 					<warName>${project.artifactId}</warName>
-					<source>${project.basedir}\src</source>
-					<target>${maven.compiler.target}</target>
-					<encoding>utf-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
