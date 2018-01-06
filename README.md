@@ -6,7 +6,7 @@ author: brandwe
 
 # Integrating Azure AD into a Java web application
 
-This Java app will give you with a quick and easy way to set up a Web application in Java using OAuth2. The sample included in the download is designed to run on any platform and tested with Java 8.
+This Java app will give you a quick and easy way to set up a Web application in Java using OAuth2. The sample included in the download is designed to run on any platform and tested with Java 8.
 
 We've released all of the source code for this example in GitHub under an MIT license, so feel free to clone (or even better, fork!) and provide feedback on the forums.
 
@@ -15,9 +15,11 @@ We've released all of the source code for this example in GitHub under an MIT li
 
 Getting started with the sample is easy. It is configured to run out of the box with minimal setup.
 
-### Step 1: Register an Azure AD Tenant
+### Step 1: Register your application in an Azure AD Tenant
 
-To use this sample you will need a Azure Active Directory Tenant. If you're not sure what a tenant is or how you would get one, read [What is an Azure AD tenant](http://technet.microsoft.com/library/jj573650.aspx)? or [Sign up for Azure as an organization](http://azure.microsoft.com/documentation/articles/sign-up-organization/). These docs should get you started on your way to using Azure AD.
+To use this sample you will need an Azure Active Directory Tenant. If you're not sure what a tenant is or how you would get one, read [What is an Azure AD tenant](http://technet.microsoft.com/library/jj573650.aspx)? or [Sign up for Azure as an organization](http://azure.microsoft.com/documentation/articles/sign-up-organization/). These docs should get you started on your way to using Azure AD.
+
+You can follow the instructions [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-devquickstarts-webapp-java#step-1-register-the-new-app-with-azure-ad) to register the app with Azure AD.
 
 ### Step 2: Download Java (7 and above) for your platform 
 
@@ -35,7 +37,7 @@ From your shell or command line:
 
 ### Step 5: Configure your web app using web.xml
 
-Provided for simplicity, `web.xml` in the webapp/WEB-INF/ folder contains values for you to fill in with your tenant information.
+Provided for simplicity, `web.xml` in the webapp/WEB-INF/ folder contains values for you to fill in with your tenant and app registration information. Read [here](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-devquickstarts-webapp-java#step-3-create-the-java-web-app-files-web-inf) to learn where to find these configuration values.
 
 ### Step 6: Package and then deploy the adal4jsample.war file.
 
