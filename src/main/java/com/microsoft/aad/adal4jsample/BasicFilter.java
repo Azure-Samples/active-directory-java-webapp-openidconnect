@@ -121,7 +121,7 @@ public class BasicFilter implements Filter {
 
     private void processAuthenticationData(HttpServletRequest httpRequest, String currentUri, String fullUrl)
             throws Throwable {
-        Map<String, String> params = new HashMap();
+        HashMap<String, String> params = new HashMap<>();
         for (String key : httpRequest.getParameterMap().keySet()) {
             params.put(key, httpRequest.getParameterMap().get(key)[0]);
         }
@@ -198,6 +198,7 @@ public class BasicFilter implements Filter {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private StateData removeStateFromSession(HttpSession session, String state) {
         Map<String, StateData> states = (Map<String, StateData>) session.getAttribute(STATES);
         if (states != null) {
@@ -211,6 +212,7 @@ public class BasicFilter implements Filter {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     private void storeStateInSession(HttpSession session, String state, String nonce) {
         if (session.getAttribute(STATES) == null) {
             session.setAttribute(STATES, new HashMap<String, StateData>());
