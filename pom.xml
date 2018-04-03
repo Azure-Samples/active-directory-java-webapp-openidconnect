@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xmlns:Xlint="http://java.sun.com/xml/ns/j2ee"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.microsoft.azure</groupId>
 	<artifactId>adal4jsample</artifactId>
@@ -15,12 +16,12 @@
 		<dependency>
 			<groupId>com.microsoft.azure</groupId>
 			<artifactId>adal4j</artifactId>
-			<version>1.1.1</version>
+			<version>1.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.nimbusds</groupId>
 			<artifactId>oauth2-oidc-sdk</artifactId>
-			<version>4.5</version>
+			<version>5.24.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -62,7 +63,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
 				<configuration>
+					<compilerArguments>
+						<Xlint:unchecked />
+					</compilerArguments>
 					<source>1.7</source>
 					<target>1.7</target>
 					<encoding>UTF-8</encoding>
