@@ -33,7 +33,7 @@
 		</tr>
 	</table>
 	<br>
-	<form action="/">
+	<form action="/adal4jsample">
 		<input type="submit" value="Home Page">
 	</form>
 
