@@ -18,6 +18,8 @@ This sample demonstrates a Java web application calling a Microsoft Graph that i
 1. The Java web application uses the Active Directory Authentication Library for Java(ADAL4J) to obtain a JWT access token from Azure Active Directory (Azure AD):
 2. The access token is used as a bearer token to authenticate the user when calling the Microsoft Graph.
 
+![ava-WebApp-Diagra](C:\Users\sagonzal\TestSamples\active-directory-java-webapp-openidconnect\ReadmeFiles\Java-WebApp-Diagram.png)
+
 ### Scenario
 
 This sample shows how to build a Java web app(confidential client) that uses OpenID Connect to sign-in users from a single Azure Active Directory (Azure AD) tenant using ADAL4J. For more information about how the protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-authentication-scenarios).
@@ -29,7 +31,7 @@ To run this sample, you'll need:
 - Working installation of Java and Maven
 - Tomcat or any other J2EE container solution
 - An Internet connection
-- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/)
+- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/) 
 - A user account in your Azure AD tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Azure portal](https://portal.azure.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
 
 ### Step 1: Download Java (8 and above) for your platform
@@ -50,7 +52,7 @@ To register these projects, you can:
 - or use PowerShell scripts that:
   - **automatically** create for you the Azure AD applications and related objects (passwords, permissions, dependencies)
 
-If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md). Please note that the configuration of your code (Step 4) still needs to be done manually. 
 
 #### First step: choose the Azure AD tenant where you want to create your applications
 
@@ -81,12 +83,13 @@ As a first step you'll need to:
    - You'll need this key later to configure the project. This key value will not be displayed again, nor retrievable by any other means, so record it as soon as it is visible from the Azure portal.
 1. Configure Permissions for your application. To that extent, in the Settings menu, choose the 'Required permissions' section and then,
    click on **Add**, then **Select an API**, and type `Microsoft Graph` in the textbox. Then, click on  **Select Permissions** and select **Directory.Read.All**.
+   - Note that for **Directory.Read.All** requires the user grating the permission to be a tenant administrator. If you created an AzureAD tenant as part of the sample, you will be an administrator by default. 
 
-### Step 3:  Configure the sample to use your Azure AD tenant
+### Step 4:  Configure the sample to use your Azure AD tenant
 
 Open `web.xml` in the webapp/WEB-INF/ folder. Fill in with your tenant and app registration information noted in registration step. Replace 'YOUR_TENANT_NAME' with the tenant domain name, 'YOUR_CLIENT_ID' with the Application Id and 'YOUR_CLIENT_SECRET' with the key value noted.
 
-### Step 4: Package and then deploy the adal4jsample.war file.
+### Step 5: Package and then deploy the adal4jsample.war file.
 
 - `$ mvn compile -DgroupId='com.microsoft.azure' -DartifactId=adal4jsample -DinteractiveMode=false`
 

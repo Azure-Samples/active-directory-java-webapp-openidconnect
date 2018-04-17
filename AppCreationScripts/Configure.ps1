@@ -172,7 +172,6 @@ Function ConfigureApplications
    Write-Host ""
    Write-Host "IMPORTANT: Think of completing the following manual step(s) in the Azure portal":
    Write-Host "- For 'app'"
-   Write-Host "  - Navigate to '$appPortalUrl'"
    Write-Host "  - Open src/main/webapp/WEB-INF/web.xml and replace the following values:"
    Write-Host "  - 'YOUR_TENANT_NAME' with $tenantName"
    Write-Host "  - 'YOUR_CLIENT_ID' with $currentAppId"

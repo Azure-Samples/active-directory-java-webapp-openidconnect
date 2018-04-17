@@ -10,13 +10,13 @@ These scripts are:
 
 - `Configure.ps1` which:
   - creates Azure AD applications and their related objects (permissions, dependencies, secrets),
-  - changes the configuration files in the C# and JavaScript projects.
+  - changes the configuration files in the Java project.
   - creates a summary file named `createdApps.html` in the folder from which you ran the script, and containing, for each Azure AD application it created:
     - the identifier of the application
     - the AppId of the application
     - the url of its registration in the [Azure portal](https://portal.azure.com).
 
-- `Cleanup.ps1` which cleans-up the Azure AD objects created by `Configure.ps1`. Note that this script does not revert the changes done in the configuration files, though. You will need to undo the change from source control (from Visual Studio, or from the command line using, for instance, git reset).
+- `Cleanup.ps1` which cleans-up the Azure AD objects created by `Configure.ps1`. Note that this script does not revert the changes done in the configuration files, though. You will need to undo the change from source control (from the command line using, for instance, git reset).
 
 ### Usage pattern for tests and DevOps scenarios
 
@@ -43,8 +43,6 @@ To use the app creation scripts:
     cd AppCreationScripts
     ```
 6. Run the scripts. See below for the [four options](#four-ways-to-run-the-script) to do that.
-7. Open the Visual Studio solution, and in the solution's context menu, choose **Set Startup Projects**.
-8. select **Start** for the projects
 
 You're done. this just works!
 
