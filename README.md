@@ -18,7 +18,7 @@ This sample demonstrates a Java web application calling a Microsoft Graph that i
 1. The Java web application uses the Active Directory Authentication Library for Java(ADAL4J) to obtain a JWT access token from Azure Active Directory (Azure AD):
 2. The access token is used as a bearer token to authenticate the user when calling the Microsoft Graph.
 
-![ava-WebApp-Diagra](C:\Users\sagonzal\TestSamples\active-directory-java-webapp-openidconnect\ReadmeFiles\Java-WebApp-Diagram.png)
+![Topology](./ReadmeFiles/Java-WebApp-Diagram.png)
 
 ### Scenario
 
