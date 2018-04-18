@@ -67,14 +67,16 @@ public class AadController {
     }
 
     private String getUsernamesFromGraph(String accessToken, String tenant) throws Exception {
-        URL url = new URL(String.format("https://graph.windows.net/%s/users?api-version=2013-04-05", tenant,
-                accessToken));
 
+
+        URL url = new URL("https://graph.microsoft.com/v1.0/users");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        // Set the appropriate header fields in the request header.
-        conn.setRequestProperty("api-version", "2013-04-05");
-        conn.setRequestProperty("Authorization", accessToken);
-        conn.setRequestProperty("Accept", "application/json;odata=minimalmetadata");
+
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+        conn.setRequestProperty("Accept","application/json");
+        int httpResponseCode = conn.getResponseCode();
+
         String goodRespStr = HttpClientHelper.getResponseStringFromConn(conn, true);
         // logger.info("goodRespStr ->" + goodRespStr);
         int responseCode = conn.getResponseCode();

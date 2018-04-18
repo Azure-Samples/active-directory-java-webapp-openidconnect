@@ -301,9 +301,9 @@ public class BasicFilter implements Filter {
             throws UnsupportedEncodingException {
         String redirectUrl = authority
                 + this.tenant
-                + "/oauth2/authorize?response_type=code&scope=openid&response_mode=form_post&redirect_uri="
+                + "/oauth2/authorize?response_type=code&scope=directory.read.all&response_mode=form_post&redirect_uri="
                 + URLEncoder.encode(currentUri, "UTF-8") + "&client_id="
-                + clientId + "&resource=https%3a%2f%2fgraph.windows.net"
+                + clientId + "&resource=https%3a%2f%2fgraph.microsoft.com"
                 + "&state=" + state
                 + "&nonce=" + nonce;
 
