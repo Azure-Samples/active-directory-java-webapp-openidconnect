@@ -24,25 +24,23 @@
  ******************************************************************************/
 package com.microsoft.aad.adal4jsample;
 
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
+
 /**
  * This class provides the methods to parse JSON Data from a JSON Formatted
  * String.
- * 
+ *
  * @author Azure Active Directory Contributor
- * 
  */
 public class JSONHelper {
 
@@ -55,70 +53,56 @@ public class JSONHelper {
     /**
      * This method parses an JSON Array out of a collection of JSON Objects
      * within a string.
-     * 
-     * @param jSonData
-     *            The JSON String that holds the collection.
+     *
+     * @param jsonObject The JSON String that holds the collection.
      * @return An JSON Array that would contains all the collection object.
-     * @throws Exception
      */
-    public static JSONArray fetchDirectoryObjectJSONArray(JSONObject jsonObject) throws Exception {
-        JSONArray jsonArray = new JSONArray();
-        jsonArray = jsonObject.optJSONObject("responseMsg").optJSONArray("value");
-        return jsonArray;
+    public static JSONArray fetchDirectoryObjectJSONArray(JSONObject jsonObject) {
+        return jsonObject.optJSONObject("responseMsg").optJSONArray("value");
     }
 
     /**
      * This method parses an JSON Object out of a collection of JSON Objects
      * within a string
-     * 
-     * @param jsonObject
+     *
      * @return An JSON Object that would contains the DirectoryObject.
-     * @throws Exception
      */
-    public static JSONObject fetchDirectoryObjectJSONObject(JSONObject jsonObject) throws Exception {
-        JSONObject jObj = new JSONObject();
-        jObj = jsonObject.optJSONObject("responseMsg");
-        return jObj;
+    public static JSONObject fetchDirectoryObjectJSONObject(JSONObject jsonObject) {
+        return jsonObject.optJSONObject("responseMsg");
     }
 
     /**
      * This method parses the skip token from a json formatted string.
-     * 
-     * @param jsonData
-     *            The JSON Formatted String.
+     *
+     * @param jsonObject The JSON Formatted String.
      * @return The skipToken.
-     * @throws Exception
      */
-    public static String fetchNextSkiptoken(JSONObject jsonObject) throws Exception {
-        String skipToken = "";
+    public static String fetchNextSkiptoken(JSONObject jsonObject) {
+        String skipToken;
         // Parse the skip token out of the string.
         skipToken = jsonObject.optJSONObject("responseMsg").optString("odata.nextLink");
 
         if (!skipToken.equalsIgnoreCase("")) {
             // Remove the unnecessary prefix from the skip token.
-            int index = skipToken.indexOf("$skiptoken=") + (new String("$skiptoken=")).length();
+            int index = skipToken.indexOf("$skiptoken=") + ("$skiptoken=").length();
             skipToken = skipToken.substring(index);
         }
         return skipToken;
     }
 
-    /**
-     * @param jsonObject
-     * @return
-     * @throws Exception
-     */
-    public static String fetchDeltaLink(JSONObject jsonObject) throws Exception {
+    public static String fetchDeltaLink(JSONObject jsonObject) {
         String deltaLink = "";
         // Parse the skip token out of the string.
         deltaLink = jsonObject.optJSONObject("responseMsg").optString("aad.deltaLink");
+
         if (deltaLink == null || deltaLink.length() == 0) {
             deltaLink = jsonObject.optJSONObject("responseMsg").optString("aad.nextLink");
             logger.info("deltaLink empty, nextLink ->" + deltaLink);
-
         }
+
         if (!deltaLink.equalsIgnoreCase("")) {
             // Remove the unnecessary prefix from the skip token.
-            int index = deltaLink.indexOf("deltaLink=") + (new String("deltaLink=")).length();
+            int index = deltaLink.indexOf("deltaLink=") + ("deltaLink=").length();
             deltaLink = deltaLink.substring(index);
         }
         return deltaLink;
@@ -127,22 +111,24 @@ public class JSONHelper {
     /**
      * This method would create a string consisting of a JSON document with all
      * the necessary elements set from the HttpServletRequest request.
-     * 
-     * @param request
-     *            The HttpServletRequest
+     *
+     * @param request The HttpServletRequest
      * @return the string containing the JSON document.
-     * @throws Exception
-     *             If there is any error processing the request.
      */
-    public static String createJSONString(HttpServletRequest request, String controller) throws Exception {
+    public static String createJSONString(HttpServletRequest request, String controller) {
         JSONObject obj = new JSONObject();
         try {
-            Field[] allFields = Class.forName(
-                    "com.microsoft.windowsazure.activedirectory.sdk.graph.models." + controller).getDeclaredFields();
+            final Class<?> aClass = Class.forName(
+                    "com.microsoft.windowsazure.activedirectory.sdk.graph.models." + controller
+            );
+            Field[] allFields = aClass.getDeclaredFields();
+
             String[] allFieldStr = new String[allFields.length];
+
             for (int i = 0; i < allFields.length; i++) {
                 allFieldStr[i] = allFields[i].getName();
             }
+
             List<String> allFieldStringList = Arrays.asList(allFieldStr);
             Enumeration<String> fields = request.getParameterNames();
 
@@ -150,6 +136,7 @@ public class JSONHelper {
 
                 String fieldName = fields.nextElement();
                 String param = request.getParameter(fieldName);
+
                 if (allFieldStringList.contains(fieldName)) {
                     if (param == null || param.length() == 0) {
                         if (!fieldName.equalsIgnoreCase("password")) {
@@ -160,29 +147,20 @@ public class JSONHelper {
                             obj.put("passwordProfile", new JSONObject("{\"password\": \"" + param + "\"}"));
                         } else {
                             obj.put(fieldName, param);
-
                         }
                     }
                 }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (JSONException | SecurityException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return obj.toString();
     }
 
     /**
-     * 
-     * @param key
-     * @param value
      * @return string format of this JSON obje
-     * @throws Exception
      */
-    public static String createJSONString(String key, String value) throws Exception {
+    public static String createJSONString(String key, String value) {
 
         JSONObject obj = new JSONObject();
         try {
@@ -197,37 +175,35 @@ public class JSONHelper {
     /**
      * This is a generic method that copies the simple attribute values from an
      * argument jsonObject to an argument generic object.
-     * 
-     * @param jsonObject
-     *            The jsonObject from where the attributes are to be copied.
-     * @param destObject
-     *            The object where the attributes should be copied into.
-     * @throws Exception
-     *             Throws a Exception when the operation are unsuccessful.
+     *
+     * @param jsonObject The jsonObject from where the attributes are to be copied.
+     * @param destObject The object where the attributes should be copied into.
+     * @throws Exception Throws a Exception when the operation are unsuccessful.
      */
     public static <T> void convertJSONObjectToDirectoryObject(JSONObject jsonObject, T destObject) throws Exception {
 
         // Get the list of all the field names.
-        Field[] fieldList = destObject.getClass().getDeclaredFields();
+        Field[] fields = destObject.getClass().getDeclaredFields();
 
         // For all the declared field.
-        for (int i = 0; i < fieldList.length; i++) {
+        for (Field field : fields) {
             // If the field is of type String, that is
             // if it is a simple attribute.
-            if (fieldList[i].getType().equals(String.class)) {
+            if (field.getType().equals(String.class)) {
                 // Invoke the corresponding set method of the destObject using
                 // the argument taken from the jsonObject.
-                destObject
-                        .getClass()
-                        .getMethod(String.format("set%s", WordUtils.capitalize(fieldList[i].getName())),
-                                new Class[] { String.class })
-                        .invoke(destObject, new Object[] { jsonObject.optString(fieldList[i].getName()) });
+                final String setterName = String.format("set%s", WordUtils.capitalize(field.getName()));
+
+                destObject.getClass()
+                        .getMethod(setterName, new Class[]{String.class})
+                        .invoke(destObject, jsonObject.optString(field.getName()));
             }
         }
     }
 
     public static JSONArray joinJSONArrays(JSONArray a, JSONArray b) {
         JSONArray comb = new JSONArray();
+
         for (int i = 0; i < a.length(); i++) {
             comb.put(a.optJSONObject(i));
         }

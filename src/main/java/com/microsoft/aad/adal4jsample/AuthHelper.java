@@ -24,14 +24,12 @@
  ******************************************************************************/
 package com.microsoft.aad.adal4jsample;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.microsoft.aad.adal4j.AuthenticationResult;
 import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
-import com.nimbusds.openid.connect.sdk.AuthenticationResponseParser;
 import com.nimbusds.openid.connect.sdk.AuthenticationSuccessResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public final class AuthHelper {
 
@@ -44,24 +42,23 @@ public final class AuthHelper {
         return request.getSession().getAttribute(PRINCIPAL_SESSION_NAME) != null;
     }
 
-    public static AuthenticationResult getAuthSessionObject(
-            HttpServletRequest request) {
-        return (AuthenticationResult) request.getSession().getAttribute(
-                PRINCIPAL_SESSION_NAME);
+    public static AuthenticationResult getAuthSessionObject(HttpServletRequest request) {
+        return (AuthenticationResult) request.getSession().getAttribute(PRINCIPAL_SESSION_NAME);
     }
 
-    public static boolean containsAuthenticationData(
-            HttpServletRequest httpRequest) {
-        Map<String, String[]> map = httpRequest.getParameterMap();
-        return httpRequest.getMethod().equalsIgnoreCase("POST") && (httpRequest.getParameterMap().containsKey(
-                        AuthParameterNames.ERROR)
-                        || httpRequest.getParameterMap().containsKey(
-                                AuthParameterNames.ID_TOKEN) || httpRequest
-                        .getParameterMap().containsKey(AuthParameterNames.CODE));
+    public static boolean containsAuthenticationData(HttpServletRequest httpRequest) {
+        final boolean isPostMethod = httpRequest.getMethod().equalsIgnoreCase("POST");
+
+        final Map<String, String[]> map = httpRequest.getParameterMap();
+
+        final boolean hasAnyRequiredParameter = map.containsKey(AuthParameterNames.ERROR)
+                || map.containsKey(AuthParameterNames.ID_TOKEN)
+                || map.containsKey(AuthParameterNames.CODE);
+
+        return (isPostMethod && hasAnyRequiredParameter);
     }
 
-    public static boolean isAuthenticationSuccessful(
-            AuthenticationResponse authResponse) {
-        return authResponse instanceof AuthenticationSuccessResponse;
+    public static boolean isAuthenticationSuccessful(AuthenticationResponse authResponse) {
+        return (authResponse instanceof AuthenticationSuccessResponse);
     }
 }

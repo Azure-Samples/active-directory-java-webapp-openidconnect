@@ -24,12 +24,7 @@
  ******************************************************************************/
 package com.microsoft.aad.adal4jsample;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import com.microsoft.aad.adal4j.AuthenticationResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -37,13 +32,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.microsoft.aad.adal4j.AuthenticationResult;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @Controller
 @RequestMapping("/secure/aad")
 public class AadController {
 
-    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public String getDirectoryObjects(ModelMap model, HttpServletRequest httpRequest) {
         HttpSession session = httpRequest.getSession();
         AuthenticationResult result = (AuthenticationResult) session.getAttribute(AuthHelper.PRINCIPAL_SESSION_NAME);
@@ -74,7 +72,7 @@ public class AadController {
 
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-        conn.setRequestProperty("Accept","application/json");
+        conn.setRequestProperty("Accept", "application/json");
         int httpResponseCode = conn.getResponseCode();
 
         String goodRespStr = HttpClientHelper.getResponseStringFromConn(conn, true);
@@ -91,7 +89,7 @@ public class AadController {
             JSONObject thisUserJSONObject = users.optJSONObject(i);
             user = new User();
             JSONHelper.convertJSONObjectToDirectoryObject(thisUserJSONObject, user);
-            builder.append(user.getUserPrincipalName() + "<br/>");
+            builder.append(user.getUserPrincipalName()).append("<br/>");
         }
         return builder.toString();
     }

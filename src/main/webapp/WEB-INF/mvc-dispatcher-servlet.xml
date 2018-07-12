@@ -11,12 +11,8 @@
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix">
-			<value>/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
 	</bean>
 
 </beans>
