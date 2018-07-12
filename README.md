@@ -75,7 +75,7 @@ of the Azure Active Directory window respectively as *Name* and *Directory ID*
 1. In the succeeding page, Find the *Application ID* value and and record it for later. You'll need it to configure the configuration file for this project.
 1. Then click on **Settings**, and choose **Properties**.
 1. For the App ID URI, replace the guid in the generated URI 'https://\<your_tenant_name\>/\<guid\>', with the name of your service, for example, 'https://\<your_tenant_name\>/Webapp-Openidconnect' (replacing `<your_tenant_name>` with the name of your Azure AD tenant)
-1. Click on **Redirect URIs** and set it to `https://localhost:8000/adal4jsample/secure/aad`
+1. Click on **Reply URLs** and set it to `http://localhost:8080/adal4jsample/secure/aad`
 1. From the Settings menu, choose **Keys** and add a new entry in the Password section:
 
    - Type a key description (of instance `app secret`),
