@@ -83,8 +83,10 @@ of the Azure Active Directory window respectively as *Name* and *Directory ID*
    - When you save this page, the key value will be displayed, copy, and save the value in a safe location.
    - You'll need this key later to configure the project. This key value will not be displayed again, nor retrievable by any other means, so record it as soon as it is visible from the Azure portal.
 1. Configure Permissions for your application. To that extent, in the Settings menu, choose the 'Required permissions' section and then,
-   click on **Add**, then **Select an API**, and type `Microsoft Graph` in the textbox. Then, click on  **Select Permissions** and select **Directory.Read.All**.
-   - Note that for **Directory.Read.All** requires the user grating the permission to be a tenant administrator. If you created an AzureAD tenant as part of the sample, you will be an administrator by default. 
+   click on **Add**, then **Select an API**, and type `Microsoft Graph` in the textbox. Then, click on  **Select Permissions** and select **Read directory data** under **APPLICATION PERMISSIONS**.
+   - Note that for **Read directory data** requires the user grating the
+     permission to be a tenant administrator. If you created an AzureAD tenant
+     as part of the sample, you will be an administrator by default. 
 
 ### Step 4:  Configure the sample to use your Azure AD tenant
 
