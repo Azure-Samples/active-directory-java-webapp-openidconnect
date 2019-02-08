@@ -1,7 +1,7 @@
 ---
 services: active-directory
 platforms: Java
-author: sagonzal
+author: xerners
 level: 300
 client: Java web application
 service: Microsoft Graph
