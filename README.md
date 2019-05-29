@@ -99,7 +99,12 @@ Open `web.xml` in the webapp/WEB-INF/ folder. Fill in with your tenant and app r
 
 - `$ mvn package`
 
-This will generate a `adal4jsample.war` file in your /targets directory. Deploy this war file using Tomcat or any other J2EE container solution. To deploy on Tomcat container, copy the .war file to the webapps folder under your Tomcat installation and then start the Tomcat server.
+This will generate a `adal4jsample.war` file in your /targets directory. Deploy this war file using Tomcat or any other J2EE container solution. 
+
+To deploy on Tomcat container
+- Navigate to your Tomcat installation (default installation on windows is `C:\Program Files\Apache Software Foundation\Tomcat`)
+- copy the `adal4jsample.war` file to the Tomcat\webapps folder 
+- Start the Tomcat server. One way to do this is by opening the Monitor Tomcat app, clicking on `start` in the `General` tab
 
 This WAR will automatically be hosted at `http://<yourserverhost>:<yourserverport>/adal4jsample/`
 
