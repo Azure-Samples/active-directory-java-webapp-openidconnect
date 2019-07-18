@@ -1,12 +1,13 @@
 ---
-services: active-directory
-platforms: Java
-author: xerners
-level: 300
-client: Java web application
-service: Microsoft Graph
-endpoint: AAD V1
+page_type: sample
+description: This sample demonstrates a Java web application calling a Microsoft Graph that is secured using Azure Active Directory.
+languages:
+  - java
+  - office-ms-graph
+products:
+  - azure-active-directory
 ---
+
 # Integrating Azure AD into a Java web application
 
 ## About this sample
