@@ -3,9 +3,9 @@ page_type: sample
 description: This sample demonstrates a Java web application calling a Microsoft Graph that is secured using Azure Active Directory.
 languages:
   - java
-  - office-ms-graph
 products:
   - azure-active-directory
+  - office-ms-graph
 ---
 
 # Integrating Azure AD into a Java web application
