@@ -5,7 +5,7 @@ languages:
   - java
 products:
   - azure-active-directory
-  - office-ms-graph
+  - ms-graph
 ---
 
 # Integrating Azure AD into a Java web application
